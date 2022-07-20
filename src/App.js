@@ -1,9 +1,8 @@
-import logo from './logo.svg'
+
 import './App.css'
 import { io } from 'socket.io-client'
 import { useEffect, useState } from 'react'
-import RoomSelect from './RoomSelect'
-import SocketChat from './Socketchat'
+
 import { Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom'
 import SignUpController from './app/controllers/SignUpController'
 import { useSelector, useDispatch } from 'react-redux/es/exports'
@@ -35,7 +34,7 @@ function App () {
           return item._id
         })
       },(response)=>{
-        if(response.status==0){
+        if(response.status===0){
           alert(response.message)
         }
       })
@@ -124,7 +123,7 @@ function App () {
 
   // return (
   //   <div className='App'>
-  //     {step == 0 && (
+  //     {step === 0 && (
   //       <>
   //         <h1>Enter name:</h1>
   //         <form
@@ -148,7 +147,7 @@ function App () {
   //       </>
   //     )}
 
-  //     {step == 1 && (
+  //     {step === 1 && (
   //       <>
   //         <RoomSelect
   //           onClick={() => {
@@ -161,7 +160,7 @@ function App () {
   //       </>
   //     )}
 
-  //     {step == 2 && (
+  //     {step === 2 && (
   //       <>
   //         <SocketChat roomname={roomname} name={name} />
   //       </>

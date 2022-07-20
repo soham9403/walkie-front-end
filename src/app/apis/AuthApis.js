@@ -9,7 +9,7 @@ export const SignUpAPi = async data => {
     data
   })
     .then(response => {
-      if (response.data.status == 1) {
+      if (response.data.status === 1) {
         return response.data
       }
     })
@@ -24,7 +24,7 @@ export const SignInAPi = async data => {
     data
   })
     .then(response => {
-      if (response.data.status == 1) {
+      if (response.data.status === 1) {
         return response.data
       }
     })
@@ -39,12 +39,12 @@ export const getUserInfo = async () => {
     headers: getHeaders()
   })
     .then(response => {
-      if (response.data.status == 1) {
+      if (response.data.status === 1) {
         return response.data
       }
     })
     .catch(async err => {
-      if (err.response.status == 401) {
+      if (err.response.status === 401) {
         return await resetToken(async () => {
           return await getUserInfo()
         })

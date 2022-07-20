@@ -11,7 +11,7 @@ const SignUpController = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleValues = (method = "set", filedName, value = "") => {
-        if (method == "set") {
+        if (method === "set") {
             const currentData = { ...values }
             currentData[filedName] = value
             setValues(currentData)
@@ -24,26 +24,26 @@ const SignUpController = () => {
     const onSubmit = async (e) => {
         e.preventDefault()
         
-        if (values.name == "") {
+        if (values.name === "") {
             handleValues('set', 'err', 'name is required')
             return 0
         }
-        if (values.email == "") {
+        if (values.email === "") {
             handleValues('set', 'err', 'email is required')
             return 0
         } else if (!isEmail(values.email)) {
             handleValues('set', 'err', 'email is invalid')
             return 0
         }
-        if (values.phone_no == "") {
+        if (values.phone_no === "") {
             handleValues('set', 'err', 'phone is required')
             return 0
         }
-        if (values.password == "") {
+        if (values.password === "") {
             handleValues('set', 'err', 'password is required')
             return 0
         }
-        if (!values.company_name || values.company_name == "") {
+        if (!values.company_name || values.company_name === "") {
             handleValues('set', 'err', 'company name is required')
             return 0
         }

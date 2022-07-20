@@ -6,7 +6,7 @@ const SocketChat = ({ name, onClick, roomname }) => {
     const [chat, setChat] = useState([])
     const [micrphone, setMicrophone] = useState(false)
 
-    const { status, startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({ audio: true });
+    const {  mediaBlobUrl } = useReactMediaRecorder({ audio: true });
 
 
 
@@ -28,7 +28,7 @@ const SocketChat = ({ name, onClick, roomname }) => {
 
         //     handle = setInterval(() => {
 
-        //         if(status=='recording'){
+        //         if(status==='recording'){
         //             console.log('hello')
         //             stopRecording()
         //             startRecording()
@@ -52,7 +52,7 @@ const SocketChat = ({ name, onClick, roomname }) => {
                     recorder.ondataavailable = (e) => {
 
 console.log('data')
-                        // if (recorder.state === "inactive") {
+                        // if (recorder.state ==== "inactive") {
                         const blob = new Blob(chunks, { type: "audio/webm" });
                         chunks = []
                         let testAudioRecord = URL.createObjectURL(blob);
@@ -66,7 +66,7 @@ console.log('data')
                     recorder.start()
                     interval = setInterval(() => {
 
-                        if (recorder.state == 'recording') { recorder.stop(); }
+                        if (recorder.state === 'recording') { recorder.stop(); }
 
 
                     }, 600)

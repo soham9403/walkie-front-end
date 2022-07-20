@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import { socket } from "../../App"
@@ -8,7 +8,7 @@ const CreateRoomController = ({ onCacle }) => {
     const [values, setValues] = useState({ name: '', persons: [], memberCode: '', err: '' })
     const { user } = useSelector(state => state)
     const handleValues = (method = "set", filedName, value = "") => {
-        if (method == "set") {
+        if (method === "set") {
             const currentData = { ...values }
             currentData[filedName] = value
             setValues(currentData)
@@ -38,7 +38,7 @@ const CreateRoomController = ({ onCacle }) => {
 
         socket.emit('create_room', JSON.stringify({ name: values.name, users: values.persons, creator: { id: user.data._id, usercode: user.data.usercode } }), (response) => {
             setLoading(false)
-            if (response.status == 1) {
+            if (response.status === 1) {
 
                 onCacle()
             } else {

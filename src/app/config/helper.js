@@ -75,7 +75,7 @@ export function getKeyByValue (object, value) {
 }
 export const getObjectBykey = (key = '', value = '', arr = []) => {
   for (let row of arr) {
-    if (row[key] && row[key] == value) {
+    if (row[key] && row[key] === value) {
       return row
     }
   }

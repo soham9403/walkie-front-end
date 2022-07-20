@@ -12,7 +12,7 @@ const SignInController = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleValues = (method = "set", filedName, value = "") => {
-        if (method == "set") {
+        if (method === "set") {
             const currentData = { ...values }
             currentData[filedName] = value
             setValues(currentData)
@@ -26,7 +26,7 @@ const SignInController = () => {
         e.preventDefault()
 
 
-        if (values.email == "") {
+        if (values.email === "") {
             handleValues('set', 'err', 'email is required')
             return 0
         } else if (!isEmail(values.email)) {
@@ -34,7 +34,7 @@ const SignInController = () => {
             return 0
         }
 
-        if (values.password == "") {
+        if (values.password === "") {
             handleValues('set', 'err', 'password is required')
             return 0
         }

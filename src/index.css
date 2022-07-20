@@ -40,7 +40,7 @@ code {
   transition: All 250ms ease;
   border-radius: 100%;
 }
-/*==========  Active State  ==========*/
+/*===============  Active State  ===============*/
 .btn-push:active {
   position: relative;
   top: 15px;
@@ -59,7 +59,7 @@ code {
   
   background-color: red;
 }
-/*==========  Navy  ==========*/
+/*===============  Navy  ===============*/
 .btn-push.navy {
   background: #1b486d;
   border: 1px solid #07121b;
