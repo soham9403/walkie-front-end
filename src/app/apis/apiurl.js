@@ -10,6 +10,7 @@ switch (mode) {
     break
 }
 
+
 export default {
   rootUrl: domainUrl,
   signUpUrl: domainUrl + '/api/auth/signup',
