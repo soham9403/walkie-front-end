@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { SignInAPi, SignUpAPi } from "../apis/AuthApis"
+import { SignInAPi } from "../apis/AuthApis"
 import { isEmail } from "../config/helper"
-import SignUpPage from "../pages/auth/SignUpPage"
+
 import { signInAction } from "../store/actions/userReducerAction"
 import { useDispatch } from "react-redux/es/exports"
 import { useNavigate } from "react-router-dom"
