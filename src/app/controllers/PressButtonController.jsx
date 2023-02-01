@@ -66,6 +66,7 @@ const PressButtonController = ({ roomId, room }) => {
                     }
                     console.log('hello')
                     audio.src = response.audio
+                    console.log(response.audio)
                     audio.load()
 
                     if (audio) {
