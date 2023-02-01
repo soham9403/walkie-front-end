@@ -57,17 +57,18 @@ const PressButtonController = ({ roomId, room }) => {
 
         const audio = new Audio()
 
-        socket.on('audio', (response) => {
+        socket.on('audio', async (response) => {
 
             if (response.roomId === roomId && !buttonPressedByMe) {
                 try {
                     audio.src = response.audio
                     audio.load()
-                    if (audio)
-                        audio.play()
+                    if (audio) {
+                        await audio.play().then(() => { console.log('audio played') })
+                    }
 
                 } catch (e) {
-                    console.log('soham')
+                    console.log(e.message)
                 }
 
                 // new Audio(response.audio).play().then((adio) => { console.log(adio) }).catch(e => { console.log(e.message) })
