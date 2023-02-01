@@ -65,8 +65,7 @@ const PressButtonController = ({ roomId, room }) => {
                         audio.pause()
                     }
                     console.log('hello')
-                    console.log(audio)
-                    audio.src = URL.createObjectURL(response.audio)
+                    audio.src = response.audio
                     audio.load()
 
                     if (audio) {
@@ -113,7 +112,7 @@ const PressButtonController = ({ roomId, room }) => {
                     };
                     let blob = await fetch(mediaBlobUrl).then(r => r.blob());
 
-                    reader.readAsArrayBuffer(blob);
+                    reader.readAsDataURL(blob);
                 } catch (e) {
                     console.log(e.message)
                 }
