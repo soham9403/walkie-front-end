@@ -1,7 +1,7 @@
 
 import './App.css'
 import { io } from 'socket.io-client'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 
 import { Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom'
 import SignUpController from './app/controllers/SignUpController'
@@ -84,8 +84,7 @@ function App () {
           navigate('/sign-in', { replace: true })
         }
       } else {
-        dispatch(signOutAction())
-        // navigate("/sign-in", { replace: true })
+        dispatch(signOutAction())        
       }
       setLoading(false)
     })()
@@ -116,57 +115,6 @@ function App () {
       </Routes>
     </>
   )
-
-  // const onClickc = () => {
-  //   socket.emit('message_by_client', input)
-  // }
-
-  // return (
-  //   <div className='App'>
-  //     {step === 0 && (
-  //       <>
-  //         <h1>Enter name:</h1>
-  //         <form
-  //           action=''
-  //           onSubmit={e => {
-  //             e.preventDefault()
-  //             setStep(1)
-  //           }}
-  //         >
-  //           <input
-  //             type='text'
-  //             onChange={e => {
-  //               setName(e.target.value)
-  //             }}
-  //             value={name}
-  //             name=''
-  //             id=''
-  //           />
-  //           <button>next</button>
-  //         </form>
-  //       </>
-  //     )}
-
-  //     {step === 1 && (
-  //       <>
-  //         <RoomSelect
-  //           onClick={() => {
-  //             setStep(2)
-  //           }}
-  //           roomname={roomname}
-  //           setRoomName={setRoomName}
-  //           name={name}
-  //         />
-  //       </>
-  //     )}
-
-  //     {step === 2 && (
-  //       <>
-  //         <SocketChat roomname={roomname} name={name} />
-  //       </>
-  //     )}
-  //   </div>
-  // )
 }
 
-export default App
+export default memo(App)

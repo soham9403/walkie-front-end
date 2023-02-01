@@ -22,7 +22,7 @@ const PressButtonController = ({ roomId, room }) => {
             message: "button pressed by " + user.data.name
         },
             (response) => {
-                console.log(response)
+
                 if (response.status === 1)
                     setDisabled(true)
             })
@@ -55,61 +55,33 @@ const PressButtonController = ({ roomId, room }) => {
 
         })
         socket.on('audio', (response) => {
-            console.log(response)
+
             if (response.roomId === roomId && !buttonPressedByMe) {
                 new Audio(response.audio).play().then(() => { console.log('enabled') }).catch(e => { console.log(e.message) })
             }
         })
+
+        return () => {
+            socket.off('pressbutton');
+            socket.off('releasebutton');
+            socket.off('audio');
+
+
+        }
     }, [])
 
     useEffect(() => {
         setDisabled(false)
     }, [roomId])
 
-    // let interval = 0;
-    // useEffect(() => {
-    //     (async () => {
-    //         let chunks = [];
-    //         let recorder;
 
-    //         try {
-
-    //             let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    //             recorder = new MediaRecorder(stream);
-    //             recorder.ondataavailable = async (e) => {
-
-    //                 console.log('data')
-
-    //                 const blob = new Blob(chunks, { type: "audio/webm" });
-    //                 chunks = []
-    //                 const testAudioRecord = URL.createObjectURL(blob);
-    //                 console.log(testAudioRecord)
-    //                 new Audio(testAudioRecord).play().then(() => { console.log('enabled') }).catch(e => { console.log(e.message) })
-
-
-    //             };
-    //             recorder.start()
-    //             interval = setInterval(() => {
-
-    //                 if (recorder.state === 'recording') { recorder.stop(); }
-
-
-    //             }, 600)
-
-
-    //         } catch (e) {
-    //             console.log("error getting stream", e);
-    //         }
-    //     })()
-    //     return () => clearInterval(interval)
-    // }, [disabled])
 
 
     const { status, startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({ audio: true });
 
     useEffect(() => {
         (async () => {
-           
+
             if (mediaBlobUrl) {
 
                 try {
@@ -154,8 +126,8 @@ const PressButtonController = ({ roomId, room }) => {
                 <h5 className="text-success">{liveMessage}</h5>
                 <div className="container p-4 d-flex align-items-center justify-content-center">
                     <button disabled={!buttonPressedByMe && disabled} className={` ${disabled ? 'btn-dark' : 'btn-primary'} btn-push`} onTouchStart={onPress} onTouchEnd={onRelease} onMouseDown={onPress} onMouseUp={onRelease} >
-                        {!disabled ? 'Press' : buttonPressedByMe ? 'Release' : 'listening...'}   
-                                   
+                        {!disabled ? 'Press' : buttonPressedByMe ? 'Release' : 'listening...'}
+
                     </button>
 
 

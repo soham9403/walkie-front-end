@@ -1,4 +1,4 @@
-export const mode = 'dev'
+export const mode = 'production'
 let domainUrl = ''
 
 switch (mode) {
@@ -8,6 +8,9 @@ switch (mode) {
   case 'dev':
     domainUrl = 'https://walkie-backend.herokuapp.com'
     break;
+    case 'production':
+      domainUrl = 'https://walkie-backend-production.up.railway.app'
+      break;
     default: domainUrl = 'http://localhost:8000';
     break;
 }
@@ -17,6 +20,7 @@ const apiUrl = {
   signUpUrl: domainUrl + '/api/auth/signup',
   signinUrl: domainUrl + '/api/auth/sign-in',
   reset_token: domainUrl + '/api/auth/reset-token',
-  userurl: domainUrl + '/api/app/user'
+  userurl: domainUrl + '/api/app/user',
+  roomInfo: domainUrl + '/api/app/room-info'
 }
 export default apiUrl

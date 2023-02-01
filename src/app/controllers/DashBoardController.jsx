@@ -1,24 +1,35 @@
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux/es/exports'
 import { socket } from '../../App'
 import { signOutAction } from '../store/actions/userReducerAction'
 import CreateRoomController from './CreateRoomController'
 import PressButtonController from './PressButtonController'
+import UserListController from './UserListController'
+
 const DashBoardController = () => {
     const { user } = useSelector(state => state)
     const dispatch = useDispatch()
-
+    console.log('')
     const [roomList, setRoomList] = useState(user.data.rooms)
     const [visibleModal, setVisibleModal] = useState(false)
     const [currentRoom, setCurrentRoom] = useState('')
     useEffect(() => {
+
         socket.on('room_created', (response) => {
-            console.log('roomss',response)
+
             const temp = [...roomList]
             temp.unshift(response)
             setRoomList(temp)
         })
+
+        socket.on('new_room', (response) => {
+            console.log('new_room', response)
+        })
+        return () => {
+            socket.off('new_room');
+            socket.off('room_created');
+        }
     }, [])
     return <>
 
@@ -47,7 +58,7 @@ const DashBoardController = () => {
                         <ul class="list-group " style={{ width: "100%" }}>
                             {console.log(roomList)}
                             {roomList.map((item, index) => {
-                                return <button class="list-group-item " style={{cursor:"pointer"}} key={index} onClick={() => { setCurrentRoom(item) }}>
+                                return <button class="list-group-item " style={{ cursor: "pointer" }} key={index} onClick={() => { setCurrentRoom(item) }}>
                                     <div className='row d-flex  align-items-center'>
                                         <div className='rounded-circle bg-dark text-light m-1 d-flex justify-content-end align-items-center' style={{ height: "30px", width: "30px", }}>
                                             <span>{item.name.slice(0, 1)}</span>
@@ -63,10 +74,12 @@ const DashBoardController = () => {
                         </ul>
                     </div>
                     <div className='col-7'>
-                        {currentRoom != '' && <PressButtonController roomId={currentRoom._id} room={currentRoom}  />}
+                        {currentRoom != '' && <UserListController roomId={currentRoom._id} room={currentRoom} />}
+                        {currentRoom != '' && <PressButtonController roomId={currentRoom._id} room={currentRoom} />}
+
                     </div>
                 </div>
             </div>
         </div></>
 }
-export default DashBoardController
+export default memo(DashBoardController)
