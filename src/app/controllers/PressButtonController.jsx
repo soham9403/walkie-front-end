@@ -11,6 +11,7 @@ const PressButtonController = ({ roomId, room }) => {
     const [disabled, setDisabled] = useState(false)
     const [buttonPressedByMe, setButtonPressedByMe] = useState(false)
     const [liveMessage, setLiveMessage] = useState('')
+    const [err, setError] = useState([])
     const onPress = () => {
 
         if (disabled) {
@@ -42,16 +43,15 @@ const PressButtonController = ({ roomId, room }) => {
     }
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     const audioContext = new AudioContext()
-    
+
     let source
-    
-  
+
+
     useEffect(() => {
         socket.on('pressbutton', (response) => {
             if (response.roomId === roomId) {
                 setLiveMessage(response.message)
                 setDisabled(true)
-                source = undefined
             }
         })
         socket.on('releasebutton', (response) => {
@@ -61,10 +61,10 @@ const PressButtonController = ({ roomId, room }) => {
             }
 
         })
-      
-        
 
-       
+
+
+
         socket.on('audio', async (response) => {
 
             if (response.roomId === roomId && !buttonPressedByMe) {
@@ -77,10 +77,9 @@ const PressButtonController = ({ roomId, room }) => {
                     source = audioContext.createBufferSource();
 
                     source.buffer = newaudioBuffer;
-                    console.log(source.buffer)
                     // source.buffer = audioBufferChunk;
                     source.connect(audioContext.destination);
-                    source.start(500);                    
+                    source.start();
 
                     // if (!audio.paused) {
                     //     audio.pause()
@@ -96,6 +95,7 @@ const PressButtonController = ({ roomId, room }) => {
 
                 } catch (e) {
                     console.log(e.message)
+                    setError([...err, e.message])
                 }
 
                 // new Audio(response.audio).play().then((adio) => { console.log(adio) }).catch(e => { console.log(e.message) })
@@ -109,10 +109,7 @@ const PressButtonController = ({ roomId, room }) => {
         }
     }, [])
 
-    // useEffect(()=>{
-    //     if(source)
-    //     source.addEventListener('ended',()=>{alert('iuwsdvbfuhybsdfbsdif')})
-    // },[source])
+  
 
     useEffect(() => {
         setDisabled(false)
@@ -179,6 +176,9 @@ const PressButtonController = ({ roomId, room }) => {
                 </div>
 
 
+            </div>
+            <div>
+                {err.map((em) => <h6 style={{ color: "red" }}>{em}</h6>)}
             </div>
         </>
 
