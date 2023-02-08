@@ -96,6 +96,8 @@ const PressButtonController = ({ roomId, room }) => {
 
                 } catch (e) {
                     console.log(e.message)
+
+                    alert(e.message)
                     setError([...err, e.message])
                 }
 
