@@ -50,6 +50,7 @@ const PressButtonController = ({ roomId, room }) => {
     useEffect(() => {
         socket.on('pressbutton', (response) => {
             if (response.roomId === roomId) {
+                source = undefined
                 setLiveMessage(response.message)
                 setDisabled(true)
             }
