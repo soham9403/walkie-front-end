@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { memo, useEffect } from "react"
 import { useState } from "react"
 import { useReactMediaRecorder } from "react-media-recorder"
 import { useSelector } from "react-redux"
@@ -71,6 +71,7 @@ const PressButtonController = ({ roomId, room }) => {
             if (response.roomId === roomId && !buttonPressedByMe) {
                 try {
                     const audioBufferChunk = await audioContext.decodeAudioData(response.audio);
+                    console.log(response.audio)
                     const newaudioBuffer = (source && source.buffer)
                         ? appendBuffer(source.buffer, audioBufferChunk, audioContext)
                         : audioBufferChunk;
@@ -82,22 +83,14 @@ const PressButtonController = ({ roomId, room }) => {
                     source.connect(audioContext.destination);
                     source.start();
 
-                    // if (!audio.paused) {
-                    //     audio.pause()
-                    // }
-                    // console.log(response.audio)
-                    // audio.src = response.audio
-                    // audio.load()
-
-                    // if (audio) {
-
-                    //     await audio.play().then(() => { console.log('audio played') })
-                    // }
-
+                    source.addEventListener("ended",()=>{
+                        source = undefined
+                    })
+                  
                 } catch (e) {
-                    console.log(e.message)
+                    console.warn(e.message)
 
-                    alert(e.message)
+                    // alert(e.message)
                     setError([...err, e.message])
                 }
 
@@ -112,7 +105,7 @@ const PressButtonController = ({ roomId, room }) => {
         }
     }, [])
 
-  
+
 
     useEffect(() => {
         setDisabled(false)
@@ -158,7 +151,7 @@ const PressButtonController = ({ roomId, room }) => {
                 if (interval)
                     clearInterval(interval)
             }
-        }, 500)
+        }, 1000)
 
         return () => clearInterval(interval)
     }, [disabled])
@@ -187,4 +180,4 @@ const PressButtonController = ({ roomId, room }) => {
 
     )
 }
-export default PressButtonController
+export default memo(PressButtonController)
